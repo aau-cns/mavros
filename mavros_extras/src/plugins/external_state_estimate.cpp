@@ -43,6 +43,7 @@ private:
   void send_estimate(const uint64_t usec, const Eigen::Vector3d &pos, const Eigen::Vector3d &vel, const Eigen::Quaterniond &att, const Eigen::Vector3d &ba, const Eigen::Vector3d &bw, const Eigen::Matrix<double,9,9> &cov_urt)
 	{
     if (last_transform_stamp_usec == usec) {
+      ROS_WARN("Discarded message with same timestamp");
       return;
     }
     last_transform_stamp_usec = usec;
@@ -84,6 +85,7 @@ private:
 
     switch (msg->QUATERNION_TYPE) {
     case 0:
+      ROS_WARN("Discarded message with unkown quaternion type");
       return;
     case 1:
       att = Eigen::Quaterniond(att_coeffs(3), att_coeffs(0), att_coeffs(1), att_coeffs(2));
@@ -99,6 +101,7 @@ private:
 
     switch (msg->FRAME_TYPE) {
     case 0:
+      ROS_WARN("Discarded message with unkown frame type");
       return;
     case 1:
       pos = ftf::transform_frame_enu_ned(Eigen::Vector3d(pos));
