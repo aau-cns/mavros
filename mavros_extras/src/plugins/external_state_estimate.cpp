@@ -108,10 +108,11 @@ private:
       vel = ftf::transform_frame_enu_ned(Eigen::Vector3d(vel));
       ba = ftf::transform_frame_enu_ned(Eigen::Vector3d(ba));
       bw = ftf::transform_frame_enu_ned(Eigen::Vector3d(bw));
-      // Alessandro: covariance conversion from enu to ned
+      // Alessandro: covariance conversion from enu to ned. Possibly wrong check ENU FRD
       transform_covariance_enu_ned(cov_urt);
       // Alessandro: Potential shit! check if baselink_aircraft conversion is needed
       att = ftf::transform_orientation_enu_ned(ftf::transform_orientation_baselink_aircraft(Eigen::Quaterniond(att)));
+      //att = ftf::transform_orientation_enu_ned(Eigen::Quaterniond(att));
       break;
     case 2:
       // Alessandro: Potential shit! check if baselink_aircraft conversion is needed
